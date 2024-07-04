@@ -1,0 +1,85 @@
+﻿@model DOANCUOIKYLTW.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>xác nhận xóa</span>
+        <h2>Sản phẩm</h2>
+    </div>
+    <div class="user-info">
+        <img src="~/Images/trash-bin.png" alt="" />
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <a href="/Admin_SanPham/Index">
+        <div class="back">
+            <i class='bx bx-arrow-back'></i>
+        </div>
+    </a>
+
+    <h3 class="main-title">Bạn có chắc muốn xóa sản phẩm này?</h3>
+
+    <div class="detail">
+        <table class="table">
+            <tr>
+                <th class="header-title">Mã sản phẩm</th>
+                <td>@Html.DisplayFor(model => model.MASP)</td>
+            <tr />
+            <tr>
+                <th class="header-title">Tên sản phẩm</th>
+                <td>@Html.DisplayFor(model => model.TENSP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Loại</th>
+                <td>@Html.DisplayFor(model => model.LOAI.TENLOAI)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Giá bán</th>
+                <td>@Html.DisplayFor(model => model.GIABAN)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Giá nhập</th>
+                <td>@Html.DisplayFor(model => model.GIANHAP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Dạng bào chế</th>
+                <td>@Html.DisplayFor(model => model.DANGBAOCHE)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Quy cách đóng gói</th>
+                <td>@Html.DisplayFor(model => model.QCDONGGOI)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Ảnh đại diện</th>
+                <td><img src="~/HinhSanPham//HinhSanPham/SanPham/@Model.ANHDAIDIEN" alt="" /></td>
+            </tr>
+            <tr>
+                <th class="header-title">Tổng đánh giá</th>
+                <td>@Html.DisplayFor(model => model.TONGDANHGIA)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Tồn kho</th>
+                <td>@Html.DisplayFor(model => model.TONKHO)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Trạng thái</th>
+                <td>@Html.DisplayFor(model => model.TRANGTHAI)</td>
+            </tr>
+        </table>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="button" />
+        </div>
+    }
+</div>
+

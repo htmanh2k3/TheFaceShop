@@ -1,0 +1,125 @@
+﻿@model DOANCUOIKYLTW.Models.DONXUAT
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="header-wrapper">
+        <div class="header-title">
+            <span>Chỉnh sửa thông tin</span>
+            <h2>Đơn hàng</h2>
+        </div>
+        <div class="user-info">
+            <img src="~/Images/pen-and-paper.png" alt="" />
+        </div>
+    </div>
+
+    <div class="tabular-wrapper">
+        <a href="/Admin_DonXuat/Index">
+            <div class="back">
+                <i class='bx bx-arrow-back'></i>
+            </div>
+        </a>
+
+        <div class="mainform1-container">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="horizontal-group">
+                <div class="form-group left">
+                    <table class="table">
+                        <tr>
+                            <th class="header-title">Mã đơn xuất</th>
+                            <td>@Html.DisplayFor(model => model.MADX)</td>
+                        </tr>
+                        <tr>
+                            <th class="header-title">Tên tài khoản đặt</th>
+                            <td>@Html.DisplayFor(model => model.TENTK)</td>
+                        </tr>
+                        <tr>
+                            <th class="header-title">Thời gian lập</th>
+                            <td>@Html.DisplayFor(model => model.NGAYLAP)</td>
+                        </tr>
+                        <tr>
+                            <th class="header-title">Trị giá</th>
+                            <td>@Html.DisplayFor(model => model.TRIGIA)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-group right">
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.DIACHIGIAO, "Địa chỉ giao", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.DIACHIGIAO, new { @class = "textbox", value = "@Model.DIACHIGIAO" })
+                        @Html.ValidationMessageFor(row => row.DIACHIGIAO)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.SDT, "Số điện thoại liên lạc", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.SDT, new { @class = "textbox", value = "@Model.SDT" })
+                        @Html.ValidationMessageFor(row => row.SDT)
+                    </div>
+                    <div class="form-group">
+                        <label for="trangthai" class="header-title">Trạng thái</label>
+                        <select type="text" id="trangthai" name="trangthai" placeholder="Trạng thái" class="textbox">
+                            @if (Model.TRANGTHAI == "Đang chuẩn bị")
+                            {
+                                <option value="Đang chuẩn bị" selected>Đang chuẩn bị</option>
+                                <option value="Đang giao">Đang giao</option>
+                                <option value="Đã giao">Đã giao</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                            }
+                            else if (Model.TRANGTHAI == "Đang giao")
+                            {
+                                <option value="Đang giao" selected>Đang giao</option>
+                                <option value="Đã giao">Đã giao</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                            }
+                            else if (Model.TRANGTHAI == "Đã giao")
+                            {
+                                <option value="Đã giao" selected>Đã giao</option>
+                            }
+                            else
+                            {
+                                <option value="Đã hủy" selected>Đã hủy</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="button" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabular-wrapper">
+        <h3 class="main-title">Thông tin chi tiết</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                <th>Sản phẩm </th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                </thead>
+                @foreach (var hdnx in ViewBag.CTDX)
+                {
+                    <tr>
+                        <td>@hdnx.SANPHAM.TENSP</td>
+                        <td>@hdnx.SOLUONG</td>
+                        <td>@hdnx.THANHTIEN</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

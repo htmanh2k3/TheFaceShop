@@ -1,0 +1,138 @@
+﻿@model DOANCUOIKYLTW.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Chi tiết</span>
+        <h2>Sản phẩm</h2>
+    </div>
+    <div class="user-info">
+        <img src="~/Images/info.png" alt="" />
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <a href="/Admin_SanPham/Index">
+        <div class="back">
+            <i class='bx bx-arrow-back'></i>
+        </div>
+    </a>
+
+    <div class="detail">
+        <table class="table">
+            <tr>
+                <th class="header-title">Mã sản phẩm</th>
+                <td>@Html.DisplayFor(model => model.MASP)</td>
+            <tr />
+            <tr>
+                <th class="header-title">Tên sản phẩm</th>
+                <td>@Html.DisplayFor(model => model.TENSP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Loại</th>
+                <td>@Html.DisplayFor(model => model.LOAI.TENLOAI)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Giá bán</th>
+                <td>@Html.DisplayFor(model => model.GIABAN)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Giá nhập</th>
+                <td>@Html.DisplayFor(model => model.GIANHAP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Dạng bào chế</th>
+                <td>@Html.DisplayFor(model => model.DANGBAOCHE)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Quy cách đóng gói</th>
+                <td>@Html.DisplayFor(model => model.QCDONGGOI)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Ảnh đại diện</th>
+                <td><img src="~/HinhSanPham//HinhSanPham/SanPham/@Model.ANHDAIDIEN" alt="" /></td>
+            </tr>
+            <tr>
+                <th class="header-title">Tổng đánh giá</th>
+                <td>@Html.DisplayFor(model => model.TONGDANHGIA)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Tồn kho</th>
+                <td>@Html.DisplayFor(model => model.TONKHO)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Trạng thái</th>
+                <td>@Html.DisplayFor(model => model.TRANGTHAI)</td>
+            </tr>
+        </table>
+    </div>
+
+    <a style="text-decoration: none" href="/Admin_SanPham/Edit/@Model.MASP">
+        <div class="button">
+            EDIT
+        </div>
+    </a>
+</div>
+
+<div class="card-container">
+    <h3 class="main-title">Báo cáo</h3>
+    <div class="card-wrapper">
+        <div class="payment-card" style="background-color: #fceff3 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng số bán ra</span>
+                    <span class="amount-value">@ViewBag.TongSoBanRaCuaSPX</span>
+                </div>
+                <i class='bx bx-list-check card-icon' style="background-color: #e38989"></i>
+            </div>
+            <span class="card-detail">**** **** 3454</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #f1e7f8 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng số nhập về</span>
+                    <span class="amount-value">@ViewBag.TongSoNhapVeCuaSPX</span>
+                </div>
+                <i class='bx bx-list-minus card-icon' style="background-color: #be84dd"></i>
+            </div>
+            <span class="card-detail">**** **** 3454</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e5f9fd ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Bán ra lần cuối</span>
+                    <span class="amount-value">@ViewBag.LanCuoiBanRaCuaSPX</span>
+                </div>
+                <i class='bx bx-star card-icon' style="background-color: #5f8ad8"></i>
+            </div>
+            <span class="card-detail">**** **** 3454</span>
+        </div>
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">lịch sử giao dịch</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>Hoạt động </th>
+            <th>Số lượng</th>
+            <th>Ngày lập</th>
+            </thead>
+            @foreach (var hdnx in ViewBag.hdnx)
+            {
+                <tr>
+                    <td>@hdnx.HOATDONG</td>
+                    <td>@hdnx.SOLUONG</td>
+                    <td>@hdnx.NGAYLAP</td>
+                </tr>
+            }
+            </table>
+    </div>
+</div>

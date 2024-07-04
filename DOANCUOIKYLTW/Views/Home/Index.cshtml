@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+
+}
+
+<div class="hero_area">
+    <!-- end header section -->
+    <!-- slider section -->
+    <div class="carousel">
+        <input type="radio" name="carousel" id="slide-btn-1" class="slide-btn" onclick="setInt();" checked />
+        <input type="radio" name="carousel" id="slide-btn-2" class="slide-btn" onclick="setInt();" />
+        <input type="radio" name="carousel" id="slide-btn-3" class="slide-btn" onclick="setInt();" />
+        <div class="slide one parallax-effect">
+            <h1></h1>
+        </div>
+        <div class="slide two parallax-effect">
+            <h1></h1>
+        </div>
+        <div class="slide three parallax-effect">
+            <h1></h1>
+        </div>
+        <div class="labels">
+            <label for="slide-btn-1"></label>
+            <label for="slide-btn-2"></label>
+            <label for="slide-btn-3"></label>
+        </div>
+    </div>
+    <script>
+
+        var int;
+        function setInt() {
+            clearInterval(int);
+            int = setInterval(function () {
+                var btns = document.getElementsByName("carousel");
+                for (var i = 0; i < btns.length; i++) {
+                    if (btns[i].checked) {
+                        btns[i].checked = false;
+                        if (i + 1 == btns.length) {
+                            btns[0].checked = true;
+                        }
+                        else {
+                            btns[i + 1].checked = true;
+                        }
+                        return;
+                    }
+                }
+            }, 5000);
+        }
+        setInt();
+
+    </script>
+    <!-- end slider section -->
+</div>
+
+<!-- service section -->
+<section class="service_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2 style="margin-top:20px">
+                SẢN PHẨM NỔI BẬT
+            </h2>
+            <p>
+                Đừng bỏ qua những sản phẩm này, hứa hẹn sẽ không làm bạn thất vọng
+            </p>
+        </div>
+        <div class="row">
+            @foreach (var i in ViewBag.Top10SPBanChay)
+            {
+                <div class="col-md-3 col-lg-3" style="width: 260px">
+                    <div class="box">
+                        <div class="img-box">
+                            <img src="~/HinhSanPham/HinhSanPham/SanPham/@i.ANHDAIDIEN" alt="" style="height: 150px; width: 150px">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                @i.MASP
+                            </h5>
+                            <div style="height: 100px">
+                                <p>
+                                    @i.TENSP
+                                </p>
+                            </div>
+                            <a href="~/SanPham/DetailSanPham/@i.MASP">
+                                <span>
+                                    Read More
+                                </span>
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="btn-box">
+            <a href="@Url.Action("showProduct","SanPham")" style="margin-bottom: 20px">
+                Xem thêm
+            </a>
+        </div>
+    </div>
+</section>
+<!-- end service section -->
+<!-- about section -->
+
+<section class="about_section layout_padding">
+    <div class="container  ">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            THE FACE SHOP
+                        </h2>
+                    </div>
+                    <p>
+                        thefaceshop.com.vn thuộc quyền sở hữu của Công ty Cổ Phần Hoa Sen Việt GPKD số 0303565753 cấp ngày 24/09/2004 tại Sở Kế hoạch & Đầu tư TP HCM | VP Miền Nam Lầu 1, G Tower 3 - 196A, Nguyễn Văn Hưởng, Phường Thảo Điền, Thành Phố Thủ Đức, TP.HCM--- Chi nhánh Công ty CP Hoa Sen Việt tại Hà Nội GPKD chi nhánh số 0303565753-008 cấp ngày 12/10/2011 | Tòa nhà Lidaco, 19 Đại Từ, Phường Đại Kim, Quận Hoàng Mai, TP. Hà Nội.
+                    </p>
+                    <a href="">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div class="img-box">
+                    <img src="Images/logo.png" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- end about section -->
+<!-- case section -->
+
+<section class="case_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2 style="margin-top:20px">
+                THÔNG TIN MỚI
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-3" style="height:800px">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="https://image.hsv-tech.io/700x0/tfs/common/582a582c-d4f7-453c-a0d5-bc86dcbe2988.webp" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5>
+                            Phục hồi làn da cùng mặt nạ dược mỹ phẩm
+                        </h5>
+                        <p>
+                            Cấp ẩm, thanh lọc, dưỡng sáng, thẩm thấu nhanh, không bết dính
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="height:800px">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="https://image.hsv-tech.io/700x0/tfs/common/ee258fed-533e-4b4b-80e7-d64bd0c0d27e.webp" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5>
+                            Kem chống nắng đa năng bảo vệ toàn vẹn
+                        </h5>
+                        <p>
+                            Có khả năng chịu nước lâu dài, Hiệu chỉnh màu da, che mờ khuyết điểm
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="height:800px">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="https://image.hsv-tech.io/700x0/tfs/common/a7e006ad-542b-48ad-b373-7d38682cb970.webp" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5>
+                            Cấp ẩm mượt mà
+                        </h5>
+                        <p>
+                            100% công thức thuần chay, dưỡng ẩm cho da, chống lão hóa, cải thiện nếp nhăn
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="height:800px">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="https://image.hsv-tech.io/700x0/tfs/common/953b2f95-df36-45e1-aaaa-80fd9eda7553.webp" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5>
+                            Tinh chất hiệu quả cao
+                        </h5>
+                        <p>
+                            Xóa đốm nâu, mờ tàn nhang, Dẫn xuất vitamin B3, Pro-vitamin B5, Giúp làm sáng da, đều màu
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end case section -->
+<!-- client section -->
+<!-- end client section -->
+<!-- contact section -->
+<!-- jQery -->
+<script src="~/Models/Scripts/respond.min.js"></script>
+<!-- popper js -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<!-- bootstrap js -->
+<script src="~/Models/Scripts/bootstrap.js"></script>
+<script src="~/Models/Scripts/custom.js"></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+<!-- End Google Map -->

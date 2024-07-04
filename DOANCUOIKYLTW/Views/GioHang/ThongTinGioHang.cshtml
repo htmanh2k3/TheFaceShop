@@ -1,0 +1,180 @@
+﻿@using DOANCUOIKYLTW.Models
+@model List<GIOHANG>
+
+
+@{
+    double tongTien = 0;
+}
+<!-- The Modal -->
+@if (Session["TENTK"] == null)
+{
+
+    List<GioHang> list = Session["GioHang"] as List<GioHang>;
+    if (list == null || list.Count == 0)
+    {
+        
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+            <h2>Không có sản phẩm</h2>
+        </div>
+
+    }
+    else
+    {
+        foreach (GioHang gioHang in list)
+        {
+            tongTien += gioHang.dDonGia * gioHang.iSoLuong;
+        }
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Hình Ảnh</th>
+                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Đơn Giá</th>
+                    <th scope="col">Tổng Tiền</th>
+                    <th scope="col">
+                        <a href=@Url.Action("XoaAllGioHang", "GioHang")>Xoá Tất Cả</a>
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+        int stt1 = 1;
+                }
+                @foreach (GioHang gioHang in list)
+                {
+                    <tr>
+                        <th scope="row">@stt1</th>
+                        <td><img style="width:170px; height:170px" src="~/HinhSanPham/HinhSanPham/SanPham/@gioHang.sAnh" /></td>
+                        <td>@gioHang.sTenSP</td>
+                        <td>
+                            <input class="soLuong" style="width:50px; height:30px" type="number" id="quantity" name="@gioHang.sMaSP" min="1" max="99" value="@gioHang.iSoLuong">
+                        </td>
+                        <td>@gioHang.dDonGia</td>
+                        <td>@(gioHang.dDonGia * gioHang.iSoLuong)</td>
+                        <td>
+                            <a href="/SanPham/DetailSanPham/@gioHang.sMaSP">
+                                <i class='bx bx-detail icon'></i>
+                            </a>|
+                            <a href="@Url.Action("XoaGioHang", "GioHang", new { maSP = gioHang.sMaSP })">
+                                <i class='bx bx-trash icon'></i>
+                            </a>
+                        </td>
+                        @{
+                    stt1 = stt1 + 1; ;
+                        }
+                    </tr>
+                }
+
+            </tbody>
+            <tr>
+                <td colspan="4">Tổng tiền:</td>
+                <td>@string.Format("{0:0,000}", tongTien)</td>
+                <td></td>
+                <td colspan="6">
+                    @using (Html.BeginForm("DangNhap_GioHang", "NguoiDung", FormMethod.Get))
+                    {
+                        <button style="float: right; padding: 10px 20px; border: none; cursor: pointer;">Đăng Nhập Ngay Để Thanh Toán</button>
+                    }
+                </td>
+            </tr>
+
+        </table>
+
+
+    }
+}
+else if (Session["TENTK"] != null)
+{
+    if (Model == null || Model.Count == 0)
+    {
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+            <h2>Không có sản phẩm</h2>
+        </div>    }
+    else
+    {
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Hình Ảnh</th>
+                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Đơn Giá</th>
+                    <th scope="col">Tổng Tiền</th>
+                    <th scope="col">
+                        <a href=@Url.Action("XoaAllGioHang", "GioHang")>Xoá Tất Cả</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+        int stt = 1;
+        foreach (GIOHANG gioHang in Model)
+        {
+            <tr>
+                <th scope="row">@stt</th>
+                <td><img style="width:170px; height:170px" src="~/HinhSanPham/HinhSanPham/SanPham/@gioHang.SANPHAM.ANHDAIDIEN" /></td>
+                <td>@gioHang.SANPHAM.TENSP</td>
+                <td>
+                    <input class="soLuong" style="width:50px; height:30px" type="number" id="quantity" name="@gioHang.MASP" min="1" max="99" value="@gioHang.SOLUONG">
+                </td>
+                <td>@string.Format("{0:0,000}", gioHang.SANPHAM.GIABAN)</td>
+                <td>@string.Format("{0:0,000}", (gioHang.SANPHAM.GIABAN * gioHang.SOLUONG))</td>
+                <td>
+                    <a href="/SanPham/DetailSanPham/@gioHang.SANPHAM.MASP">
+                        <i class='bx bx-detail icon'></i>
+                    </a>|
+                    <a href="@Url.Action("XoaGioHang", "GioHang", new { maSP = gioHang.SANPHAM.MASP })">
+                        <i class='bx bx-trash icon'></i>
+                    </a>
+                </td>
+            </tr>
+            stt = stt + 1;
+        }
+                }
+            </tbody>
+            <tr>
+                <td colspan="4">Tổng tiền:</td>
+                <td>@string.Format("{0:0,000}", Model.Sum(t=>t.SOLUONG * t.SANPHAM.GIABAN))</td>
+                <td></td>
+                <td colspan="6">
+                    <a href="/GioHang/ThanhToan">
+                        <button style="float: right; padding: 10px 20px; border: none; cursor: pointer;">Thanh Toán</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    }
+}
+
+
+<script>
+    var input_SoLuong = document.querySelectorAll('.soLuong');
+
+    input_SoLuong.forEach(function (input) {
+        input.addEventListener('change', function (event) {
+            var maSP = event.target.name;
+            var soLuong = event.target.value;
+
+            //alert(maSP + '-' + soLuong);
+            // Thực hiện Ajax để gọi tới action trong controller
+            $.ajax({
+                url: '@Url.Action("ThayDoiSoLuong", "GioHang")',
+                type: 'GET',
+                data: { maSP: maSP, soLuong: soLuong },
+                success: function (response) {
+                    $('#GioHang').html(response);
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi
+                }
+            });
+        });
+    });
+
+</script>

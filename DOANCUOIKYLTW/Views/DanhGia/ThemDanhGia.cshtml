@@ -1,0 +1,57 @@
+﻿@model DOANCUOIKYLTW.Models.DANHGIA
+
+@{
+    ViewBag.Title = "ThemDanhGia";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<h2>Thêm Đánh Giá</h2>
+
+@using (Html.BeginForm("ThemDanhGia", "DanhGia", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.MASP) <!-- Truyền MaSanPham vào hàm ThemDanhGia -->
+
+    <div class="form-group">
+        <label for="starRating">Chọn số sao:</label>
+        <div class="rating" id="starRating" data-rating="0">
+            <span data-value="1">☆</span>
+            <span data-value="2">☆</span>
+            <span data-value="3">☆</span>
+            <span data-value="4">☆</span>
+            <span data-value="5">☆</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="reviewContent">Nhập đánh giá của bạn:</label>
+        <textarea id="reviewContent" name="BINHLUAN" rows="3" required></textarea>
+    </div>
+
+    <button type="button" onclick="submitReview()">Gửi đánh giá</button>
+}
+
+<script>
+    document.querySelectorAll('.rating span').forEach(function (star) {
+        star.addEventListener('click', function () {
+            var rating = this.getAttribute('data-value');
+            document.getElementById('starRating').setAttribute('data-rating', rating);
+
+            document.querySelectorAll('.rating span').forEach(function (s) {
+                s.innerHTML = s.getAttribute('data-value') <= rating ? '★' : '☆';
+            });
+        });
+    });
+
+    function submitReview() {
+        var rating = document.getElementById('starRating').getAttribute('data-rating');
+        var reviewContent = document.getElementById('reviewContent').value;
+
+        // Sử dụng Ajax để gửi dữ liệu đánh giá lên máy chủ
+        // Gọi hàm xử lý ở phía máy chủ, ví dụ /DanhGia/ThemDanhGia
+        // Truyền các thông tin như rating, reviewContent
+
+        // Sau khi xử lý xong, có thể cập nhật giao diện hoặc chuyển hướng người dùng
+    }
+</script>

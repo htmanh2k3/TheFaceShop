@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Quản lý</span>
+        <h2>Doanh Thu</h2>
+    </div>
+    <div class="user-info">
+        <img src="~/Images/profile.png" alt="" />
+    </div>
+</div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<div id="container" class="tabular-wrapper">
+    <script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tình hình thu chi trong năm'
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            labels: {
+                format: '{value}'
+            }
+        },
+        tooltip: {
+            crosshairs: true,
+            shared: true
+        },
+        series: [{
+            name: 'Tổng thu',
+            marker: {
+                symbol: 'square'
+            },
+            data: [@ViewBag.ThongKeTongThu[0].TIENCHI,
+                   @ViewBag.ThongKeTongThu[1].TIENCHI,
+                   @ViewBag.ThongKeTongThu[2].TIENCHI,
+                   @ViewBag.ThongKeTongThu[3].TIENCHI,
+                   @ViewBag.ThongKeTongThu[4].TIENCHI,
+                   @ViewBag.ThongKeTongThu[5].TIENCHI,
+                   @ViewBag.ThongKeTongThu[6].TIENCHI,
+                   @ViewBag.ThongKeTongThu[7].TIENCHI,
+                   @ViewBag.ThongKeTongThu[8].TIENCHI,
+                   @ViewBag.ThongKeTongThu[9].TIENCHI,
+                   @ViewBag.ThongKeTongThu[10].TIENCHI,
+                   @ViewBag.ThongKeTongThu[11].TIENCHI]
+
+            }, {
+            name: 'Tổng chi',
+            marker: {
+                symbol: 'diamond'
+            },
+            data: [@ViewBag.ThongKeTongChi[0].TIENCHI,
+                   @ViewBag.ThongKeTongChi[1].TIENCHI,
+                   @ViewBag.ThongKeTongChi[2].TIENCHI,
+                   @ViewBag.ThongKeTongChi[3].TIENCHI,
+                   @ViewBag.ThongKeTongChi[4].TIENCHI,
+                   @ViewBag.ThongKeTongChi[5].TIENCHI,
+                   @ViewBag.ThongKeTongChi[6].TIENCHI,
+                   @ViewBag.ThongKeTongChi[7].TIENCHI,
+                   @ViewBag.ThongKeTongChi[8].TIENCHI,
+                   @ViewBag.ThongKeTongChi[9].TIENCHI,
+                   @ViewBag.ThongKeTongChi[10].TIENCHI,
+                   @ViewBag.ThongKeTongChi[11].TIENCHI]
+            }],
+        });
+
+    </script>
+</div>
+
+<div class="card-container">
+    <h3 class="main-title">Báo cáo</h3>
+    <div class="card-wrapper">
+        <div class="payment-card" style="background-color: #fce3f1 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng thu</span>
+                    <span class="amount-value">@ViewBag.TongTriGiaDHX.ToString("N0")</span>
+                </div>
+                <i class='bx bx-dollar card-icon' style="background-color: #d971ab"></i>
+            </div>
+            <span class="card-detail">revenue</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e8f8ff ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng chi trong 6 tháng</span>
+                    <span class="amount-value">@ViewBag.TongTriGiaDHNTrong6Thang.ToString("N0")</span>
+                </div>
+                <i class='bx bx-dollar card-icon' style="background-color: #6facc7"></i>
+            </div>
+            <span class="card-detail">payment</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #f2ebff ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng số đơn hàng nhập</span>
+                    <span class="amount-value">@ViewBag.SoLuongDHN</span>
+                </div>
+                <i class='bx bx-cart-download card-icon' style="background-color: #8f6bd1"></i>
+            </div>
+            <span class="card-detail">import orders</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e1fced ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng số đơn hàng xuất</span>
+                    <span class="amount-value">@ViewBag.SOLUONGDHX</span>
+                </div>
+                <i class='bx bx-vertical-top card-icon' style="background-color: #60bf8b"></i>
+            </div>
+            <span class="card-detail">export orders</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">lịch sử giao dịch</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>Hoạt động </th>
+            <th>Mã đơn</th>
+            <th>Thời gian lập</th>
+            <th>Trị giá</th>
+            </thead>
+            @foreach (var thtc in ViewBag.thtc)
+            {
+                <tr>
+                    <td>@thtc.HOATDONG</td>
+                    @if (@thtc.MADON.StartsWith("DN"))
+                    {
+                        <td>
+                            <a href="/Admin_DonNhap/Detail/@thtc.MADON" style="text-decoration: none;">
+                                @thtc.MADON
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="/Admin_DonXuat/Detail/@thtc.MADON" style="text-decoration: none;">
+                                @thtc.MADON
+                            </a>
+                        </td>
+                    }
+                    <td>@thtc.NGAYLAP</td>
+                    <td>@thtc.TRIGIA</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

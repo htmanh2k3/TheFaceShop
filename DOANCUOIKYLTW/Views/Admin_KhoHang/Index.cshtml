@@ -1,0 +1,266 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.SANPHAM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Quản lý</span>
+        <h2>Tồn Kho</h2>
+    </div>
+    <div class="user-info">
+        <form action="/Admin_KhoHang/Index">
+            <div class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="search" id="search" name="search" placeholder="Search..." />
+                <button type="submit" class="back">OK</button>
+            </div>
+        </form>
+        <img src="~/Images/profile.png" alt="" />
+    </div>
+</div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<div id="container" class="tabular-wrapper">
+    <script>
+        Highcharts.chart('container', {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: 'Số lượng nhập và xuất của từng loại sản phẩm'
+        },
+        xAxis: {
+            categories: ['@ViewBag.ThongKeLoaiBanRa[0].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[1].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[2].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[3].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[4].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[5].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[6].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[7].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[8].TENLOAI',
+                       '@ViewBag.ThongKeLoaiBanRa[9].TENLOAI'],
+            crosshair: true,
+            accessibility: {
+                description: 'Loại sản phẩm'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        series: [
+            {
+                name: 'Nhập',
+                data: [@ViewBag.ThongKeLoaiNhapVao[0].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[1].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[2].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[3].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[4].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[5].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[6].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[7].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[8].SOLUONG,
+                       @ViewBag.ThongKeLoaiNhapVao[9].SOLUONG]
+            },
+            {
+                name: 'Xuất',
+                data: [@ViewBag.ThongKeLoaiBanRa[0].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[1].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[2].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[3].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[4].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[5].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[6].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[7].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[8].SOLUONG,
+                       @ViewBag.ThongKeLoaiBanRa[9].SOLUONG]
+            }
+        ]
+    });
+    </script>
+</div>
+
+<div class="card-container">
+    <h3 class="main-title">Báo cáo</h3>
+    <div class="card-wrapper">
+        <div class="payment-card" style="background-color: #ecdeff ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Dưới định mức tồn</span>
+                    <span class="amount-value">@ViewBag.SLSanPhamDuoiDMT</span>
+                </div>
+                <i class='bx bx-down-arrow-alt card-icon' style="background-color: #9766d9"></i>
+            </div>
+            <span class="card-detail">ĐMT: 150</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #ffebf7 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Vượt định mức tồn</span>
+                    <span class="amount-value">@ViewBag.SLSanPhamVuotDMT</span>
+                </div>
+                <i class='bx bx-up-arrow-alt card-icon' style="background-color: #d171ab"></i>
+            </div>
+            <span class="card-detail">ĐMT: 150</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #f6ffe6 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Còn hàng trong kho</span>
+                    <span class="amount-value">@ViewBag.SLSanPhamConHang</span>
+                </div>
+                <i class='bx bxl-stack-overflow card-icon' style="background-color: #9ec25f "></i>
+            </div>
+            <span class="card-detail">in stock</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e1f9fa ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Hết hàng</span>
+                    <span class="amount-value">@ViewBag.SLSanPhamHetHang</span>
+                </div>
+                <i class='bx bx-x card-icon' style="background-color: #70bfc2"></i>
+            </div>
+            <span class="card-detail">out of stock</span>
+        </div>
+    </div>
+</div>
+
+@{
+    string iconClass = "";
+    if (ViewBag.IconClass == "bxs-up-arrow")
+    {
+        iconClass = "bxs-down-arrow";
+    }
+    else
+    {
+        iconClass = "bxs-up-arrow";
+    }
+}
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">Danh mục kho hàng</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>
+                <a href="/Admin_KhoHang/Index?SortColumn=MASP&IconClass=@iconClass&page=1" style="text-decoration: none;">Mã SP</a>
+                @if (ViewBag.SortColumn == "MASP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                <a href="/Admin_KhoHang/Index?SortColumn=TENSP&IconClass=@iconClass&page=1" style="text-decoration: none;">Tên SP</a>
+                @if (ViewBag.SortColumn == "TENSP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                <a href="/Admin_KhoHang/Index?SortColumn=TONKHO&IconClass=@iconClass&page=1" style="text-decoration: none;">Tồn kho</a>
+                @if (ViewBag.SortColumn == "TONKHO")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="/Admin_SanPham/Detail/@item.MASP" style="text-decoration: none;">
+                            @Html.DisplayFor(modelItem => item.MASP)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TENSP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TONKHO)
+                    </td>
+                </tr>
+
+            }
+
+            <tr>
+                <td colspan="9">
+                    @{
+                        int PrevPage = ViewBag.Page - 1;
+                        if (PrevPage <= 0)
+                        {
+                            PrevPage = 1;
+                        }
+                        int NextPage = ViewBag.Page + 1;
+                        if (NextPage > ViewBag.NoOfPages)
+                        {
+                            NextPage = ViewBag.NoOfPages;
+                        }
+                    }
+                    <ul class="pagination">
+                        <li>
+                            <a class="page-link" href="/Admin_KhoHang/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@PrevPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-left-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                        @for (int i = 0; i < ViewBag.NoOfPages; i++)
+                        {
+                            if (i + 1 == ViewBag.Page)
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_KhoHang/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="change-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_KhoHang/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="number-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li class="page-item active">
+                            <a class="page-link" href="/Admin_KhoHang/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@NextPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-right-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <a style="text-decoration: none" href="/Admin_DonNhap/Create">
+        <div class="button">
+            <i class='bx bx-add-to-queue icon'></i>
+            Nhập thêm hàng
+        </div>
+    </a>
+
+</div>

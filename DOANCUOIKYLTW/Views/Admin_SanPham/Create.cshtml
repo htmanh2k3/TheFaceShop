@@ -1,0 +1,100 @@
+﻿@model DOANCUOIKYLTW.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="header-wrapper">
+        <div class="header-title">
+            <span>Tạo mới</span>
+            <h2>Sản phẩm</h2>
+        </div>
+        <div class="user-info">
+            <img src="~/Images/add.png" alt="" />
+        </div>
+    </div>
+
+    <div class="tabular-wrapper">
+        <a href="/Admin_SanPham/Index">
+            <div class="back">
+                <i class='bx bx-arrow-back'></i>
+            </div>
+        </a>
+
+        <div class="mainform1-container">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="horizontal-group">
+                <div class="form-group left">
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.TENSP, "Tên sản phẩm", new {@class = "header-title" }) 
+                        @Html.TextBoxFor(row=> row.TENSP, new {@class  = "textbox", placeholder = "Tên sản phẩm" }) 
+                        @Html.ValidationMessageFor(row => row.TENSP)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.MALOAI, "Loại sản phẩm", new { @class = "header-title" })
+                        @Html.DropDownListFor(row => row.MALOAI, new SelectList(ViewBag.Loai, "MALOAI", "TENLOAI"), new { @class = "textbox" })
+                        @Html.ValidationMessageFor(row => row.MALOAI)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.GIABAN, "Giá bán", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.GIABAN, new { @class = "textbox", type = "number", placeholder = "Giá bán" })
+                        @Html.ValidationMessageFor(row => row.GIABAN)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.GIANHAP, "Giá nhập", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.GIANHAP, new { @class = "textbox", type = "number", placeholder = "Giá nhập" })
+                        @Html.ValidationMessageFor(row => row.GIANHAP)
+                    </div>
+                </div>
+
+                <div class="form-group right">
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.DANGBAOCHE, "Dạng bào chế", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.DANGBAOCHE, new { @class = "textbox", placeholder = "Dạng bào chế" })
+                        @Html.ValidationMessageFor(row => row.DANGBAOCHE)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.QCDONGGOI, "Quy cách đóng gói", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.QCDONGGOI, new { @class = "textbox", placeholder = "Quy cách đóng gói" })
+                        @Html.ValidationMessageFor(row => row.QCDONGGOI)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.ANHDAIDIEN, "Ảnh đại diện", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.ANHDAIDIEN, new { @class = "textbox", type = "file", placeholder = "Ảnh đại diện" })
+                        @Html.ValidationMessageFor(row => row.ANHDAIDIEN)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.TRANGTHAI, "Trạng thái", new { @class = "header-title" })
+                        @Html.DropDownListFor(row => row.TRANGTHAI, new
+                            List<SelectListItem>()
+                            {
+                                 new SelectListItem() {Text = "Đang bán", Value = "Đang bán"},
+                                 new SelectListItem() {Text = "Tạm ngưng", Value = "Tạm ngưng"},
+                            }, new { @class = "textbox" })
+                        @Html.ValidationMessageFor(row => row.TRANGTHAI)
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Create" class="button" />
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.SanPhamAlbumViewModel>
+
+@*<ul class="list-group list-group-flush text-left" id="categoryList">
+        <li class="list-group-item">
+            <a href="#" class="category-link">Loại sản phẩm</a>
+        </li>
+        @foreach (var item in Model.Select(t => t.SanPham.LOAI).Distinct())
+        {
+            <li class="list-group-item">
+                <a href=@Url.Action("SanPhamTheoLoai", "SanPham", new { loai = item.MALOAI}) class="category-link">@item.TENLOAI</a>
+            </li>
+        }
+    </ul>*@
+
+<style>
+    .list-group-item {
+        width:300px;
+        border: none;
+        background-color: #FFF; 
+        padding: 20px 15px; 
+        text-align: center; 
+    }
+
+        .list-group-item a {
+            color: #967bb6; 
+            text-decoration: none;
+            font-weight: bold;
+            display: block; 
+        }
+
+        .list-group-item:hover, .list-group-item:focus {
+            background-color: #967bb6; 
+        }
+
+            .list-group-item:hover a, .list-group-item:focus a {
+                color: #FFF; 
+            }
+</style>
+
+
+
+
+<ul class="list-group list-group-flush text-left">
+    <li class="list-group-item" style="background-color: #967bb6;">
+        <a href="#" style="text-transform:uppercase; text-decoration:none; color:white; font-weight:bold;">Loại sản phẩm</a>
+    </li>
+    @foreach (var item in Model.Select(t => t.SanPham.LOAI).Distinct())
+    {
+        <li class="list-group-item">
+            <a href=@Url.Action("SanPhamTheoLoai", "SanPham", new { loai = item.MALOAI})>@item.TENLOAI</a>
+        </li>
+    }
+
+</ul>
+
+

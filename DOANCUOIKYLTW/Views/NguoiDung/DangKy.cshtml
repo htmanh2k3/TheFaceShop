@@ -1,0 +1,65 @@
+﻿@model DOANCUOIKYLTW.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<h1 class="text-center">ĐĂNG KÝ TÀI KHOẢN</h1>
+@using (Html.BeginForm("DangKy", "NguoiDung", FormMethod.Post))
+{
+    <div class="container d-flex justify-content-center">
+        <div class="col-xs-7 col-sm-7 col-md-7 well well-sm text-left">
+            <div class="form-group">
+                <label for="fname" class="control-label">Họ Tên</label>
+                <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên">
+            </div>
+            <div class="form-group">
+                <label for="Gender">Giới tính</label>
+                <select id="Gender" name="Gender" class="form-control">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Province">Tỉnh/Thành phố</label>
+                <select id="Province" name="Province" class="form-control">
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="TP.HCM">TP.HCM</option>
+                    Thêm các tỉnh/thành phố khác vào đây
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="District">Quận/Huyện</label>
+                <input type="text" id="District" name="District" class="form-control" placeholder="Nhập quận/huyện" />
+            </div>
+
+            <div class="form-group">
+                <label for="Address">Địa chỉ (Số nhà, Tên đường, v.v.)</label>
+                <input type="text" id="Address" name="Address" class="form-control" placeholder="Nhập số nhà, tên đường, v.v" />
+            </div>
+            <div class="form-group">
+                <label for="UserName">Tên tài khoản</label>
+                @Html.TextBoxFor(model => model.TENTK, new { @class = "form-control", placeholder = "Nhập tên tài khoản" })
+                @Html.ValidationMessageFor(model => model.TENTK)
+            </div>
+            <div class="form-group">
+                <label for="Password">Mật khẩu</label>
+                @Html.PasswordFor(model => model.MATKHAU, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                @Html.ValidationMessageFor(model => model.MATKHAU)
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control", type = "email", placeholder = "Nhập email" })
+                @Html.ValidationMessageFor(model => model.EMAIL)
+            </div>
+            @Html.ValidationSummary()
+
+            <div style="text-align:center;">
+                <button type="submit" class="btn btn-primary" style="margin-bottom:20px">Đăng ký</button>
+            </div>
+
+        </div>
+    </div> 
+}

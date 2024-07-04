@@ -1,0 +1,72 @@
+﻿@model DOANCUOIKYLTW.Models.DONNHAP
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Chi tiết</span>
+        <h2>Đơn hàng</h2>
+    </div>
+    <div class="user-info">
+        <img src="~/Images/info.png" alt="" />
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <a href="/Admin_DonNhap/Index">
+        <div class="back">
+            <i class='bx bx-arrow-back'></i>
+        </div>
+    </a>
+
+    <div class="detail">
+        <table class="table">
+            <tr>
+                <th class="header-title">Mã đơn nhập</th>
+                <td>@Html.DisplayFor(model => model.MADN)</td>
+            <tr />
+            <tr>
+                <th class="header-title">Thời gian lập</th>
+                <td>@Html.DisplayFor(model => model.NGAYLAP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Tổng tiền</th>
+                <td>@Html.DisplayFor(model => model.TONGTIEN)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Trạng thái đơn hàng</th>
+                <td>@Html.DisplayFor(model => model.TRANGTHAI)</td>
+            </tr>
+        </table>
+    </div>
+
+    <a style="text-decoration: none" href="/Admin_DonNhap/Edit/@Model.MADN">
+        <div class="button">
+            EDIT
+        </div>
+    </a>
+</div>
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">Thông tin chi tiết</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>Sản phẩm </th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            </thead>
+            @foreach (var hdnx in ViewBag.CTDN)
+            {
+                <tr>
+                    <td>@hdnx.SANPHAM.TENSP</td>
+                    <td>@hdnx.SOLUONG</td>
+                    <td>@hdnx.THANHTIEN</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

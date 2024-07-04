@@ -1,0 +1,218 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.SANPHAM>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Danh mục</span>
+        <h2>Sản phẩm</h2>
+    </div>
+    <div class="user-info">
+        <form action="/Admin_SanPham/Index">
+            <div class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="search" id="search" name="search" placeholder="Search..." />
+                <button type="submit" class="back">OK</button>
+            </div>
+        </form>
+        <img src="~/Images/profile.png" alt="" />
+    </div>
+</div>
+
+<div class="card-container">
+    <h3 class="main-title">Báo cáo</h3>
+    <div class="card-wrapper">
+        <div class="payment-card" style="background-color: #fceff3 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Sản phẩm đang bán</span>
+                    <span class="amount-value">@ViewBag.SoLuongSPDangBan</span>
+                </div>
+                <i class='bx bx-list-check card-icon' style="background-color: #e38989"></i>
+            </div>
+            <span class="card-detail">on sale</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #f1e7f8 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Sản phẩm tạm ngưng</span>
+                    <span class="amount-value">@ViewBag.SoLuongSPTamNgung</span>
+                </div>
+                <i class='bx bx-list-minus card-icon' style="background-color: #be84dd"></i>
+            </div>
+            <span class="card-detail">discontinued</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e5f9fd ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Đánh giá trung bình</span>
+                    <span class="amount-value">@ViewBag.DanhGiaTrungBinh</span>
+                </div>
+                <i class='bx bx-star card-icon' style="background-color: #5f8ad8"></i>
+            </div>
+            <span class="card-detail">average rating</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e8fff0 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Sản phẩm bán chạy nhất</span>
+                    <span class="text">@ViewBag.SanPhamBanChayNhat</span>
+                </div>
+                <i class='bx bx-vertical-top card-icon' style="background-color: #56ce80"></i>
+            </div>
+            <span class="card-detail">bestseller</span>
+        </div>
+    </div>
+</div>
+
+@{
+    string iconClass = "";
+    if (ViewBag.IconClass == "bxs-up-arrow")
+    {
+        iconClass = "bxs-down-arrow";
+    }
+    else
+    {
+        iconClass = "bxs-up-arrow";
+    }
+}
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">Danh mục sản phẩm</h3>
+    <a href="/Admin_SanPham/Create">
+        <i class='bx bx-add-to-queue icon'></i>
+    </a>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>
+                <a href="/Admin_SanPham/Index?SortColumn=MASP&IconClass=@iconClass&page=1" style="text-decoration: none;">Mã SP</a>
+                @if (ViewBag.SortColumn == "MASP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                <a href="/Admin_SanPham/Index?SortColumn=TENSP&IconClass=@iconClass&page=1" style="text-decoration: none;">Tên SP</a>
+                @if (ViewBag.SortColumn == "TENSP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                Giá bán
+            </th>
+            <th>
+                <a href="/Admin_SanPham/Index?SortColumn=GIANHAP&IconClass=@iconClass&page=1" style="text-decoration: none;">Giá nhập</a>
+                @if (ViewBag.SortColumn == "GIANHAP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Action
+            </th>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MASP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TENSP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GIABAN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GIANHAP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TRANGTHAI)
+                    </td>
+                    <td>
+                        <a href="/Admin_SanPham/Detail/@item.MASP">
+                            <i class='bx bx-detail icon'></i>
+                        </a>|
+                        <a href="/Admin_SanPham/Edit/@item.MASP">
+                            <i class='bx bx-edit-alt icon'></i>
+                        </a>|
+                        <a href="/Admin_SanPham/Delete/@item.MASP">
+                            <i class='bx bx-trash icon'></i>
+                        </a>
+                    </td>
+                </tr>
+
+            }
+
+            <tr>
+                <td colspan="9">
+                    @{
+                        int PrevPage = ViewBag.Page - 1;
+                        if (PrevPage <= 0)
+                        {
+                            PrevPage = 1;
+                        }
+                        int NextPage = ViewBag.Page + 1;
+                        if (NextPage > ViewBag.NoOfPages)
+                        {
+                            NextPage = ViewBag.NoOfPages;
+                        }
+                    }
+                    <ul class="pagination">
+                        <li>
+                            <a class="page-link" href="/Admin_SanPham/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@PrevPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-left-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                        @for (int i = 0; i < ViewBag.NoOfPages; i++)
+                        {
+                            if (i + 1 == ViewBag.Page)
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_SanPham/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="change-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_SanPham/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="number-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li class="page-item active">
+                            <a class="page-link" href="/Admin_SanPham/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@NextPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-right-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

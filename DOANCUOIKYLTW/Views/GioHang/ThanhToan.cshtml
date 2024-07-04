@@ -1,0 +1,83 @@
+﻿@model DOANCUOIKYLTW.Models.DONXUAT
+
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div style="padding-left: 4rem; padding-right: 4rem">
+    <a href="/GioHang/Index">
+        <div class="back">
+            <i class='bx bx-arrow-back'></i>
+        </div>
+    </a>
+
+    <div class="detail">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th class="header-title">Mã đơn</th>
+                <td>@Html.DisplayFor(model => model.MADX)</td>
+            <tr />
+            <tr>
+                <th class="header-title">Thời gian lập</th>
+                <td>@Html.DisplayFor(model => model.NGAYLAP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Tổng tiền</th>
+                <td>@Html.DisplayFor(model => model.TRIGIA)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Tình trạng đơn hàng</th>
+                <td>Đang lập đơn</td>
+            </tr>
+        </table>
+        <div class="col-xs-7 col-sm-7 col-md-7 well well-sm text-left">
+            <div class="form-group">
+                @Html.LabelFor(row => row.DIACHIGIAO, "Địa chỉ giao(*)", new { @class = "header-title" })
+                @Html.TextBoxFor(row => row.DIACHIGIAO, new { @class = "form-control", placeholder = "Địa chỉ giao hàng", value = Model.DIACHIGIAO })
+                @Html.ValidationMessageFor(row => row.DIACHIGIAO)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(row => row.SDT, "Số điện thoại(*)", new { @class = "header-title" })
+                @Html.TextBoxFor(row => row.SDT, new { @class = "form-control", placeholder = "SDT" })
+                @Html.ValidationMessageFor(row => row.SDT)
+            </div>
+        </div>
+    </div>
+    <div class="tabular-wrapper" style="padding-bottom: 50px">
+        <h3 class="main-title">Thông tin chi tiết</h3>
+        <div class="table-container">
+            <table>
+                <thead style="background: #967BB6; color: #ffffff">
+                <th>Sản phẩm </th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                </thead>
+                @foreach (var hdnx in ViewBag.CTDX)
+                {
+                    <tr>
+                        <td>@hdnx.SANPHAM.TENSP</td>
+                        <td>@hdnx.SOLUONG</td>
+                        <td>@string.Format("{0:0,000}", (hdnx.SANPHAM.GIABAN * hdnx.SOLUONG))</td>
+                    </tr>
+                }
+            <tr>
+                <td style="width: 200px;float: right">
+                    <input type="submit" value="Xác nhận đơn hàng" class="buttonThanhToan" style="background-color: #967BB6; color: #ffffff"/>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>     
+</div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

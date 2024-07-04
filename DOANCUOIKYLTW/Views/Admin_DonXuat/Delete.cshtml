@@ -1,0 +1,89 @@
+﻿@model DOANCUOIKYLTW.Models.DONXUAT
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>xác nhận xóa</span>
+        <h2>Sản phẩm</h2>
+    </div>
+    <div class="user-info">
+        <img src="~/Images/trash-bin.png" alt="" />
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <a href="/Admin_SanPham/Index">
+        <div class="back">
+            <i class='bx bx-arrow-back'></i>
+        </div>
+    </a>
+
+    <h3 class="main-title">Bạn có chắc muốn xóa đơn hàng này?</h3>
+
+    <div class="detail">
+        <table class="table">
+            <tr>
+                <th class="header-title">Mã đơn xuất</th>
+                <td>@Html.DisplayFor(model => model.MADX)</td>
+            <tr />
+            <tr>
+                <th class="header-title">Tên tài khoản đặt</th>
+                <td>@Html.DisplayFor(model => model.TENTK)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Ngày lập</th>
+                <td>@Html.DisplayFor(model => model.NGAYLAP)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Địa chỉ giao</th>
+                <td>@Html.DisplayFor(model => model.DIACHIGIAO)</td>
+            </tr>
+            <tr>
+                <th class="header-title">SĐT liên hệ</th>
+                <td>@Html.DisplayFor(model => model.SDT)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Trị giá</th>
+                <td>@Html.DisplayFor(model => model.TRIGIA)</td>
+            </tr>
+            <tr>
+                <th class="header-title">Trạng thái đơn hàng</th>
+                <td>@Html.DisplayFor(model => model.TRANGTHAI)</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">Thông tin chi tiết</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>Sản phẩm </th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            </thead>
+            @foreach (var hdnx in ViewBag.CTDX)
+            {
+                <tr>
+                    <td>@hdnx.SANPHAM.TENSP</td>
+                    <td>@hdnx.SOLUONG</td>
+                    <td>@hdnx.THANHTIEN</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="button" />
+        </div>
+    }
+</div>

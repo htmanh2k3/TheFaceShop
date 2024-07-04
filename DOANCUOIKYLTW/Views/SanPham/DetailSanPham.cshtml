@@ -1,0 +1,302 @@
+﻿@*@model DOANCUOIKYLTW.Models.SanPhamAlbumViewModel*@
+@model IEnumerable<DOANCUOIKYLTW.Models.SanPhamAlbumViewModel>
+@{
+    ViewBag.Title = "DetailSanPham";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    <link href="~/CSS/single.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+}
+@{
+    var loggedInUser = Session["TENTK"] as string;
+}
+
+
+@{
+    var anh1 = "";
+    var anh2 = "";
+    var anh3 = "";
+    var anh4 = "";
+}
+
+@foreach (var item in Model)
+{
+    if (!string.IsNullOrEmpty(item.Album.HINHANH) && item.Album.HINHANH.Length >= 7)
+    {
+        if (item.Album.HINHANH.Substring(6, 1) == "1")
+        {
+            anh1 = item.Album.HINHANH;
+        }
+        else if (item.Album.HINHANH.Substring(6, 1) == "2")
+        {
+            anh2 = item.Album.HINHANH;
+        }
+        else if (item.Album.HINHANH.Substring(6, 1) == "3")
+        {
+            anh3 = item.Album.HINHANH;
+        }
+        else if (item.Album.HINHANH.Substring(6, 1) == "4")
+        {
+            anh4 = item.Album.HINHANH;
+        }
+    }
+}
+
+<!-----Product------->
+@if (Model != null && Model.Any())
+{
+    var firstItem = Model.FirstOrDefault();
+    <section class="product">
+        <div class="container">
+            <div class="product-top row">
+                <div class="breadcrumbs d-flex flex-row align-items-center">
+                    <ul>
+                        <!--nhớ gắn lại link các trang-->
+                        <li><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                        <li><a href="@Url.Action("showProduct","SanPham")"><i class="fa fa-angle-right" aria-hidden="true"></i>Sản Phẩm</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Chi tiết sản phẩm</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-content row">
+                <div class="product-content-left row">
+                    <div class="product-content-left-small-img">
+                        <img src="@Url.Content("~/HinhSanPham/HinhSanPham/SanPham/" + anh2)" alt="">
+                        <img src="@Url.Content("~/HinhSanPham/HinhSanPham/SanPham/" + anh3)" alt="">
+                        <img src="@Url.Content("~/HinhSanPham/HinhSanPham/SanPham/" + anh4)" alt="">
+                    </div>
+                    <div class="product-content-left-big-img">
+                        <img src="@Url.Content("~/HinhSanPham/HinhSanPham/SanPham/" + anh1)" alt="">
+                    </div>
+                </div>
+                <div class="product-content-right">
+                    <div class="product-content-right-name">
+                        <h1>@firstItem.SanPham.LOAI.TENLOAI</h1>
+                        <p>
+                            @firstItem.SanPham.TENSP
+                        </p>
+                    </div>
+                    <div class="product_price">@String.Format("{0:N0}", firstItem.SanPham.GIABAN)đ</div>
+                    <ul class="star_rating">
+                        @{
+                            string stars1 = "";
+                            for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= @firstItem.SanPham.TONGDANHGIA)
+                                {
+                                    stars1 += "<li><i class='fa fa-star' aria-hidden='true'></i></li>";
+                                }
+                                else if (i - @firstItem.SanPham.TONGDANHGIA < 1)
+                                {
+                                    stars1 += "<li><i class='fa fa-star-half-o' aria-hidden='true'></i></li>";
+                                }
+                                else
+                                {
+                                    stars1 += "<li><i class='fa fa-star-o' aria-hidden='true'></i></li>";
+                                }
+                            }
+                        }
+                        @Html.Raw(stars1)
+                    </ul>
+
+
+
+                    <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                        <span>Số lượng: </span>
+                        <div class="quantity_selector">
+                            <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            <span id="quantity_value">1</span>
+                            <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
+                    </div>
+                    <div style="margin-left: 20px;" class="product-add-to-cart">
+                        @using (Html.BeginForm("ThemGioHang", "GioHang", FormMethod.Post))
+                        {
+                            @Html.Hidden("maSP", firstItem.SanPham.MASP)
+                            @Html.Hidden("soLuong", "", new { id = "soLuong" })
+                            <button id="btnAddToCart">
+                                <i id="flyToCart" class="fa fa-shopping-cart"></i> <p>THÊM VÀO GIỎ HÀNG</p>
+                            </button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs_section_container">
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="tabs_container">
+                        <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                            <li class="tab active" data-active-tab="tab_2"><span>Chi tiết sản phẩm</span></li>
+                            <li class="tab" data-active-tab="tab_3"><span>Reviews</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!-- Chi tiết sản phẩm -->
+
+                    <div id="tab_2" class="tab_container active">
+                        <div class="row">
+                            <div class="col additional_info_col">
+                                <div class="tab_title additional_info_title">
+                                    <h4>Chi tiết</h4>
+                                </div>
+                                <p>Thương hiệu:<span>THE FACE SHOP</span></p>
+                                <p>Công thức:<span>@firstItem.SanPham.DANGBAOCHE</span></p>
+                                <p>Loại da:<span>Mọi loại da</span></p>
+                                <p>Quy cách đóng gói:<span>@firstItem.SanPham.QCDONGGOI</span></p>
+                                <p>Gửi từ:<span>TP.Hồ Chí Minh</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Người dùng review -->
+
+                    <div id="tab_3" class="tab_container">
+                        <div class="row">
+
+                            <!-- User Reviews -->
+
+                            <div class="col-lg-6 reviews_col">
+                                <div class="tab_title reviews_title">
+                                    <h4>Reviews </h4>
+                                </div>
+
+
+                                <!-- User Review -->
+                                @if (firstItem.DanhGiaList != null && firstItem.DanhGiaList.Any())
+                                {
+                                    foreach (var danhGia in firstItem.DanhGiaList)
+                                    {
+                                        <div class="user_review_container d-flex flex-column flex-sm-row">
+                                            <div class="user">
+                                                <div class="user_pic"></div>
+                                                <div class="user_rating">
+                                                    <ul class="star_rating">
+                                                        @{
+                                                            string stars = "";
+                                                            for (int i = 1; i <= 5; i++)
+                                                            {
+                                                                if (i <= danhGia.MUCDODG)
+                                                                {
+                                                                    stars += "<li><i class='fa fa-star' aria-hidden='true'></i></li>";
+                                                                }
+                                                                else if (i - danhGia.MUCDODG < 1)
+                                                                {
+                                                                    stars += "<li><i class='fa fa-star-half-o' aria-hidden='true'></i></li>";
+                                                                }
+                                                                else
+                                                                {
+                                                                    stars += "<li><i class='fa fa-star-o' aria-hidden='true'></i></li>";
+                                                                }
+                                                            }
+                                                        }
+                                                        @Html.Raw(stars)
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="review">
+                                                <div class="review_date">@danhGia.NGAYBL</div>
+                                                <div class="user_name">@danhGia.TENTK</div>
+                                                <p>@danhGia.BINHLUAN</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Chưa có đánh giá cho sản phẩm này.</p>
+                                }
+
+
+                            </div>
+
+                            <!-- Add Review -->
+
+                            <div class="col-lg-6 add_review_col">
+
+                                <div class="add_review">
+                                    
+                                    @if (Session["TENTK"] != null)
+                                    {
+                                        <div style="margin-left: 20px;" class="product-add-to-cart">
+                                            @using (Html.BeginForm("AddReview", "SanPham", FormMethod.Post))
+                                            {
+                                                <div>
+                                                    <h1>Đánh giá của bạn:</h1>
+                                                    <ul class="user_star_rating">
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                    </ul>
+                                                    <textarea id="review_message" class="input_review" name="message" placeholder="Thêm đánh giá" rows="4" required data-error="Hãy để lại cho chúng tôi 1 lời đánh giá."></textarea>
+                                                </div>
+                                                @Html.Hidden("maSP", firstItem.SanPham.MASP)
+                                                @Html.Hidden("mucdodg", "", new { id = "mucdodg" })
+                                                @Html.Hidden("Review", "", new { id = "Review" })
+                                                <button id="btnAddReview">
+                                                    <i id="AddReview"></i> <p>GỬI ĐÁNH GIÁ</p>
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    var quantityValue = document.getElementById('quantity_value').innerText;
+</script>
+<script>
+    document.getElementById('btnAddToCart').addEventListener('click', function () {
+        var quantityValue = document.getElementById('quantity_value').innerText;
+        document.getElementById('soLuong').value = quantityValue;
+    });
+</script>
+<script>
+        // Lấy tất cả các ngôi sao
+        var stars = document.querySelectorAll(".user_star_rating li i");
+
+        // Đếm số sao được chọn
+        var countStars = function() {
+        var count = 0;
+        for (var i = 0; i < stars.length; i++) {
+        if (stars[i].classList.contains('fa-star')) {
+        count++;
+        }
+        }
+        return count;
+        }
+        
+        document.getElementById('btnAddReview').addEventListener('click', function () {
+        // Gán số sao được chọn vào trường ẩn 'SoSao'
+        document.getElementById('mucdodg').value = countStars();
+
+        // Gán nội dung đánh giá vào trường ẩn 'Review'
+        document.getElementById('Review').value = document.getElementById('review_message').value;
+        });
+</script>
+<script src="~/Scripts/custom.js"></script>

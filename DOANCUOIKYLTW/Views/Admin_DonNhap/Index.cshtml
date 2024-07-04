@@ -1,0 +1,212 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.DONNHAP>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+<div class="header-wrapper">
+    <div class="header-title">
+        <span>Quản lý</span>
+        <h2>Đơn hàng nhập</h2>
+    </div>
+    <div class="user-info">
+        <form action="/Admin_DonNhap/Index">
+            <div class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="search" id="search" name="search" placeholder="Search..." />
+                <button type="submit" class="back">OK</button>
+            </div>
+        </form>
+        <img src="~/Images/profile.png" alt="" />
+    </div>
+</div>
+
+<div class="card-container">
+    <h3 class="main-title">Báo cáo</h3>
+    <div class="card-wrapper">
+        <div class="payment-card" style="background-color: #fadee0 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Số lượng đơn hàng</span>
+                    <span class="amount-value">@ViewBag.SoLuongDHN</span>
+                </div>
+                <i class='bx bx-list-check card-icon' style="background-color: #e36d75"></i>
+            </div>
+            <span class="card-detail">number of orders</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #f0ffd1 ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Tổng chi trong 6 tháng</span>
+                    <span class="amount-value">@ViewBag.TongTriGiaDHNTrong6Thang.ToString("N0")</span>
+                </div>
+                <i class='bx bx-dollar card-icon' style="background-color: #a9cc62"></i>
+            </div>
+            <span class="card-detail">total value</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #dbffed ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Số đơn chưa nhận</span>
+                    <span class="amount-value">@ViewBag.SoLuongDHNChuaNhan</span>
+                </div>
+                <i class='bx bx-square card-icon' style="background-color: #59c991"></i>
+            </div>
+            <span class="card-detail">**** **** ****</span>
+        </div>
+
+        <div class="payment-card" style="background-color: #e0f4ff ">
+            <div class="card-header">
+                <div class="amount">
+                    <span class="title">Số đơn đã nhận</span>
+                    <span class="amount-value">@ViewBag.SoLuongDHNDaNhan</span>
+                </div>
+                <i class='bx bxs-square card-icon' style="background-color: #579cc2"></i>
+            </div>
+            <span class="card-detail">**** **** ****</span>
+        </div>
+    </div>
+</div>
+
+@{
+    string iconClass = "";
+    if (ViewBag.IconClass == "bxs-up-arrow")
+    {
+        iconClass = "bxs-down-arrow";
+    }
+    else
+    {
+        iconClass = "bxs-up-arrow";
+    }
+}
+
+<div class="tabular-wrapper">
+    <h3 class="main-title">Danh mục</h3>
+    <a href="/Admin_DonNhap/Create">
+        <i class='bx bx-add-to-queue icon'></i>
+    </a>
+    <div class="table-container">
+        <table>
+            <thead>
+            <th>
+                <a href="/Admin_DonNhap/Index?SortColumn=MADN&IconClass=@iconClass&page=1" style="text-decoration: none;">Mã đơn</a>
+                @if (ViewBag.SortColumn == "MADN")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                <a href="/Admin_DonNhap/Index?SortColumn=NGAYLAP&IconClass=@iconClass&page=1" style="text-decoration: none;">Thời gian lập</a>
+                @if (ViewBag.SortColumn == "NGAYLAP")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                <a href="/Admin_DonNhap/Index?SortColumn=TONGTIEN&IconClass=@iconClass&page=1" style="text-decoration: none;">Tổng tiền</a>
+                @if (ViewBag.SortColumn == "TONGTIEN")
+                {
+                    <i class="bx @ViewBag.IconClass"></i>
+                }
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Action
+            </th>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MADN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NGAYLAP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TONGTIEN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TRANGTHAI)
+                    </td>
+                    <td>
+                        <a href="/Admin_DonNhap/Detail/@item.MADN">
+                            <i class='bx bx-detail icon'></i>
+                        </a>|
+                        <a href="/Admin_DonNhap/Edit/@item.MADN">
+                            <i class='bx bx-edit-alt icon'></i>
+                        </a>|
+                        <a href="/Admin_DonNhap/Delete/@item.MADN">
+                            <i class='bx bx-trash icon'></i>
+                        </a>
+                    </td>
+                </tr>
+
+            }
+
+            <tr>
+                <td colspan="9">
+                    @{
+                        int PrevPage = ViewBag.Page - 1;
+                        if (PrevPage <= 0)
+                        {
+                            PrevPage = 1;
+                        }
+                        int NextPage = ViewBag.Page + 1;
+                        if (NextPage > ViewBag.NoOfPages)
+                        {
+                            NextPage = ViewBag.NoOfPages;
+                        }
+                    }
+                    <ul class="pagination">
+                        <li>
+                            <a class="page-link" href="/Admin_DonNhap/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@PrevPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-left-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                        @for (int i = 0; i < ViewBag.NoOfPages; i++)
+                        {
+                            if (i + 1 == ViewBag.Page)
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_DonNhap/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="change-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="page-link" href="/Admin_DonNhap/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                        <div class="number-page">
+                                            @(i + 1)
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li class="page-item active">
+                            <a class="page-link" href="/Admin_DonNhap/Index?SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@NextPage">
+                                <div class="change-page">
+                                    <i class='bx bxs-right-arrow icon'></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

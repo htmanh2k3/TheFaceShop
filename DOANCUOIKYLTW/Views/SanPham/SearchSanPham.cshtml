@@ -1,0 +1,114 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.SanPhamAlbumViewModel>
+
+@{
+    ViewBag.Title = "SearchSanPham";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    <link href="~/CSS/single.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+
+<style>
+    input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        vertical-align: sub;
+        margin-right: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        line-height: 1.5;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="product-top row" style="margin-bottom:-79px">
+    <div class="breadcrumbs d-flex flex-row align-items-center">
+        <ul>
+            <!--nhớ gắn lại link các trang-->
+            <li><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+            <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Sản Phẩm</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-3">
+        @Html.Partial("LoaiPartiview")
+
+
+
+        @using (Html.BeginForm("LocSanPhamTheoGia", "SanPham", FormMethod.Get))
+        {
+            <p style="height: 230px; padding-top: 20px; padding-left: 30px; background-color: #E6E6FA">
+                <label style="display: block; margin-bottom: 5px;">
+                    <input type="radio" name="priceRange" value="0-100000" /> 0 - 100,000
+                </label>
+                <label style="display: block; margin-bottom: 5px;">
+                    <input type="radio" name="priceRange" value="100000-200000" /> 100,000 - 200,000
+                </label>
+                <label style="display: block; margin-bottom: 5px;">
+                    <input type="radio" name="priceRange" value="above200000" /> Trên 200,000
+                </label>
+                <button type="submit" style="display: block; width: auto; margin: 10px auto; margin-bottom:20px; padding: 5px 15px; ">Lọc</button>
+            </p>
+        }
+    </div>
+    <div class="col-9">
+        <div class="container" style="display: flex; flex-wrap: wrap; column-gap: 10px ; align-content:center; justify-content:center">
+            @foreach (var item in Model)
+            {
+                var sanPham = item.SanPham;
+                var album = item.Album;
+                if (album.HINHANH.Substring(6, 1) == "1")
+                {
+                    sanPham.ANHDAIDIEN = album.HINHANH;
+                    <div class="card" style="margin: 5px; width:185px; height:350px">
+                        <img class="card-img-top" src="@Url.Content("~/HinhSanPham/HinhSanPham/SanPham/" + sanPham.ANHDAIDIEN)" alt="@sanPham.TENSP" />
+                        <div class="card-body">
+                            <a href="/SanPham/DetailSanPham/@sanPham.MASP">
+                                <p class="card-text" style="overflow: hidden; max-height: 50px; text-align: center;">@sanPham.TENSP</p>
+                            </a>
+                            <div>
+                                <p class="card-text" style="text-align:center; overflow: hidden; max-height: 30px; font-size:15px">@String.Format("{0:N0}", sanPham.GIABAN)</p>
+
+                            </div>
+                            <div class="card-text" style="align-content:center; align-items:center; justify-content:center; display:flex">
+                                <ul style="margin: 0 0 0 0; padding: 0 0 0 0" class="star_rating">
+                                    @{
+                    string stars = "";
+                    for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= @sanPham.TONGDANHGIA)
+                        {
+                            stars += "<li><i class='fa fa-star' aria-hidden='true'> </i> </li>";
+                        }
+                        else if (i - @sanPham.TONGDANHGIA < 1)
+                        {
+                            stars += "<li><i class='fa fa-star-half-o' aria-hidden='true'> </i> </li>";
+                        }
+                        else
+                        {
+                            stars += "<li><i class='fa fa-star-o' aria-hidden='true'> </i> </li>";
+                        }
+                    }
+                                    }
+                                    @Html.Raw(stars)
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

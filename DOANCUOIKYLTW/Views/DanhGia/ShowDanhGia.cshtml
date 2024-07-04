@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DOANCUOIKYLTW.Models.DANHGIA>
+
+@{
+    ViewBag.Title = "ShowDanhGia";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+<h2>ShowDanhGia</h2>
+
+<div class="container" style="display:flex; flex-wrap:wrap; gap: 10px">
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: calc(100% / 3 - 30px)">
+            @*<img class="card-img-top" src="~/HinhSanPham/HinhSanPham/SanPham/@item.ANHDAIDIEN" alt="@item.TENSP" />*@
+            <div class="card-body">
+                <p class="card-text" style="overflow: hidden; max-height: 50px; text-align: center;">@item.TENTK</p>
+                <div style="display: flex; justify-content: space-between;">
+                    Giá:<p class="card-text" style="overflow: hidden; max-height: 50px;">@item.MUCDODG☆</p>
+                    <p class="card-text" style="overflow: hidden; max-height: 50px;">@item.BINHLUAN</p>
+
+                </div>
+                @*@Html.ActionLink("Xem chi tiết", "DetailSanPham", new { id = item.MASP }, new { @class = "alert-link" })*@
+            </div>
+        </div>
+
+
+    }
+</div>

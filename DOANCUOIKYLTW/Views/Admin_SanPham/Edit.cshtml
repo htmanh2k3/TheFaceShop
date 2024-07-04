@@ -1,0 +1,118 @@
+﻿@model DOANCUOIKYLTW.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Css/LayoutAdmin.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="header-wrapper">
+        <div class="header-title">
+            <span>Chỉnh sửa thông tin</span>
+            <h2>Sản phẩm</h2>
+        </div>
+        <div class="user-info">
+            <img src="~/Images/pen-and-paper.png" alt="" />
+        </div>
+    </div>
+
+    <div class="tabular-wrapper">
+        <a href="/Admin_SanPham/Index">
+            <div class="back">
+                <i class='bx bx-arrow-back'></i>
+            </div>
+        </a>
+
+        <div class="mainform1-container">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="horizontal-group">
+                <div class="form-group left">
+                    <div class="form-group">
+                        <div class="form-group">
+                            @Html.LabelFor(row => row.TENSP, "Tên sản phẩm", new { @class = "header-title" })
+                            @Html.TextBoxFor(row => row.TENSP, new { @class = "textbox", value = "@Model.TENSP" })
+                            @Html.ValidationMessageFor(row => row.TENSP)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MALOAI" class="header-title">Loại</label>
+                        <select type="text" id="MALOAI" name="MALOAI" placeholder="Loại" class="textbox">
+                            @foreach (var cat in ViewBag.Loai)
+                            {
+                                if (cat.MALOAI == Model.MALOAI)
+                                {
+                                    <option value="@cat.MALOAI" selected>@cat.TENLOAI</option>
+                                }
+                                else
+                                {
+                                    <option value="@cat.MALOAI">@cat.TENLOAI</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.GIABAN, "Giá bán", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.GIABAN, new { @class = "textbox", value = "@Model.GIABAN" })
+                        @Html.ValidationMessageFor(row => row.GIABAN)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.GIANHAP, "Giá nhập", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.GIANHAP, new { @class = "textbox", value = "@Model.GIANHAP" })
+                        @Html.ValidationMessageFor(row => row.GIANHAP)
+                    </div>
+                </div>
+
+                <div class="form-group right">
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.DANGBAOCHE, "Dạng bào chế", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.DANGBAOCHE, new { @class = "textbox", value = "@Model.DANGBAOCHE" })
+                        @Html.ValidationMessageFor(row => row.DANGBAOCHE)
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            @Html.LabelFor(row => row.QCDONGGOI, "Quy cách đóng gói", new { @class = "header-title" })
+                            @Html.TextBoxFor(row => row.QCDONGGOI, new { @class = "textbox", value = "@Model.QCDONGGOI" })
+                            @Html.ValidationMessageFor(row => row.QCDONGGOI)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="TRANGTHAI" class="header-title">Trạng thái</label>
+                        <select id="TRANGTHAI" name="TRANGTHAI" class="textbox">
+                            @if (Model.TRANGTHAI == "Đang bán")
+                            {
+                                <option value="Đang bán" selected>Đang bán</option>
+                                <option value="Tạm ngưng">Tạm ngưng</option>
+                            }
+                            else
+                            {
+                                <option value="Đang bán">Đang bán</option>
+                                <option value="Tạm ngưng" selected>Tạm ngưng</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(row => row.ANHDAIDIEN, "Ảnh đại diện", new { @class = "header-title" })
+                        @Html.TextBoxFor(row => row.ANHDAIDIEN, new { @class = "textbox", type = "file" })
+                        @Html.ValidationMessageFor(row => row.ANHDAIDIEN)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                    <input type="submit" value="Save" class="button" />
+            </div>
+        </div>
+    </div>
+}
+
+
